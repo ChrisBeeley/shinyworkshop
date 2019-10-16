@@ -7,7 +7,7 @@ library(pander)
 library(xtable)
 library(DT)
 
-load("commentsApp/testData.Rdata")
+load("testData.Rdata")
 
 function(input, output) {
   
