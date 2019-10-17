@@ -1,0 +1,33 @@
+---
+title: "Shiny workshop"
+author: "Chris Beeley"
+date: "5 November 2018"
+output: 
+  ioslides_presentation:
+    css: temp.css
+runtime: shiny
+---
+
+## What is Shiny?
+
+* Shiny is a web application programming framework
+* It's a big sack of HTML, JavaScript, and CSS, all called from R, basically
+* It requires no knowledge of HTML, JavaScript, or CSS, but if you have that knowledge it will do more
+
+## What does Shiny do?
+
+* It does this
+
+```{r, out.width = "800px", echo = FALSE}
+
+knitr::include_graphics("figures/geoexplorer.png")
+
+```
+
+## But it also does this
+
+
+
+## How does Shiny work?
+
+* Reactive programming
