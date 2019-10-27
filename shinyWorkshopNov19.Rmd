@@ -71,6 +71,17 @@ knitr::include_graphics("figures/geoexplorer.png")
 * Multiple file... 
 * Choose directory
 
+## The fundamentals
+
+* The fundamentals of Shiny apps are very simple
+* You define a bunch of inputs using functions like textInput() and numericInput() in ui.R
+* Each input has a name
+* You lay out your outputs in ui.R using functions like textOutput() and plotOutput()
+* Each output has a name
+* Using the names you just defined in ui.R, you define a bunch of outputs in server.R using functions like renderPlot() and renderText()
+* Within server.R you can access the value of inputs using input$nameOfInput
+* It makes a lot of sense if you just browse the code, which we will do now
+
 ## We'll add a title to get warmed up
 
 * Inputs are defined like this 
@@ -126,47 +137,49 @@ knitr::include_graphics("figures/out.png")
 
 ```
 
+## Tabset panels
+
+* Tabset panels are useful if you want multiple outputs but not all on the same page
+
+```{r, eval = FALSE}
+
+mainPanel(
+  tabsetPanel(
+    tabPanel("Label", outputFunction("nameOfOutput")),
+    tabPanel("Label2", outputFunction2("nameOfOutput2"))
+  )
+)
+
+```
+
 ## Some code for you to use
 
 ```{r, eval = FALSE}
 
-mapData %>%
-  filter(year >= input$year[1], year <= input$year[2])
+# server side
 
-```
+renderText({...})
 
-```{r, eval = FALSE}
+renderPlot({...})
 
-paste0(input$year[2] - input$year[1], " years are selected. There are ", 
-       length(unique(mapData$country)), " countries in the dataset measured at ",
-       length(unique(mapData$year)), " occasions.")
+renderLeaflet({...})
 
-```
+# ui.R
 
-```{r, eval = FALSE}
+sliderInput({...})
 
-thePlot = mapData %>%
-  group_by(continent, year) %>%
-  summarise(meanLife = mean(lifeExp)) %>%
-  ggplot(aes(x = year, y = meanLife, group = continent, colour = continent)) +
-  geom_line() + ggtitle("Graph to show life expectancy by continent over time")
+checkboxInput({...})
 
-return(thePlot)
+textOutput(...)
 
-```
+plotOutput(...)
 
-## The map
+leafletOutput(...)
 
-```{r, eval = FALSE}
-
-mapData %>%
-  filter(year == input$year[2]) %>%
-  leaflet() %>%
-  addTiles() %>%
-  setView(lng = 0, lat = 0, zoom = 2) %>%
-  addCircles(lng = ~ lon, lat = ~ lat, weight = 1,
-             radius = ~ lifeExp * 5000, 
-             popup = ~ paste(country, lifeExp))
+tabsetPanel(
+  tabPanel("Label", outputFunction("nameOfOutput")),
+  tabPanel("Label2", outputFunction2("nameOfOutput2"))
+)
 
 ```
 
@@ -287,6 +300,10 @@ output$trend = renderPlot({
 - Make sure your code works outside of Shiny!
 - Use of cat()
 - Breakpoints and browser()
+- Run options(shiny.reactlog=TRUE)
+    * Run
+    * Press Ctrl+F3 for an interactive summary of reactive activity in your application
+    * This has saved me more than once
 
 ## Super whizzy tricks
 
