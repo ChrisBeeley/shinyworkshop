@@ -16,7 +16,6 @@ library(DiagrammeR)
 
 ```
 
-
 - Chris Beeley is from Nottinghamshire Healthcare
 - Using R for 11 years
 - Shiny for 7 (when all this were fields)
