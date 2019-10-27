@@ -10,26 +10,23 @@ function(input, output) {
   
   # produce data
   
-  theData = reactive({
-    
-    mapData %>%
-      filter(year >= input$year[1], year <= input$year[2])
-  })
+  theData = # shiny function here
+  # })
   
   # Summary 
   
   output$summary = renderText({
     
     paste0(input$year[2] - input$year[1], " years are selected. There are ", 
-           length(unique(theData()$country)), " countries in the dataset measured at ",
-           length(unique(theData()$year)), " occasions.")
+           length(unique(# change the data object here$country)), " countries in the dataset measured at ",
+           length(unique(# change the data object here$year)), " occasions.")
   })
   
   # trend
   
   output$trend = renderPlot({ 
     
-    thePlot = theData() %>%
+    thePlot = # change the data object here %>%
       group_by(continent, year) %>%
       summarise(meanLife = mean(lifeExp)) %>%
       ggplot(aes(x = year, y = meanLife, group = continent, colour = continent)) +
@@ -45,6 +42,8 @@ function(input, output) {
   # map
   
   output$map = renderLeaflet({
+    
+    # leave this one alone because the map data is filtered separately in its own function
     
     mapData %>%
       filter(year == input$year[2]) %>%
